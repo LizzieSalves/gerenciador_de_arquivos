@@ -1,12 +1,11 @@
 import path, { resolve } from 'path'
-import fs, { writeFile } from 'fs'
-import { promises } from 'dns'
+import fs from 'fs'
 
 
 // Criar diretorio:
 export function createdDirectory(dirPath){
     return new Promise((resolve, reject) => {
-        fs.mkdir(dirPath, {resursive: true}, (err) => {
+        fs.mkdir(dirPath, {recursive: true}, (err) => {
             if (err){
                 reject(err)
             } 
@@ -21,8 +20,8 @@ export function createdDirectory(dirPath){
 
 
 // Criar arquivo no diretorio:
-export function creatdFile(filePath, content = ''){
-    return new Promese ((resolve, reject) => {
+export function createdFile(filePath, content = ''){
+    return new Promise ((resolve, reject) => {
         fs.writeFile(filePath, content, 'utf-8', (err) => {
             if (err){
                 reject(err)
@@ -38,7 +37,7 @@ export function creatdFile(filePath, content = ''){
 
 // Listar arquivos:
 export function listFiles(dirPath){
-    return new Promese ((resolve, reject) => {
+    return new Promise ((resolve, reject) => {
         // readdir = fazer a leitura do diretorio
         fs.readdir(dirPath, (err, files) => {
             if (err){
@@ -53,7 +52,7 @@ export function listFiles(dirPath){
 
 
 // Ler arquivos:
-export function readFile(filePath){
+export function readFiles(filePath){
     return new Promise ((resolve, reject) => {
         fs.readFile(filePath, 'utf-8', (err, data) => {
             if (err){
@@ -69,8 +68,8 @@ export function readFile(filePath){
 
 // Escrever arquivos:
 export function writeFile(filePath, content){
-    return new Promese ((resolve, reject) => {
-        fs.writeFile(filePath, content, 'utf-8', (err) => {
+    return new Promise ((resolve, reject) => {
+        fs.writeFile(filePath, content, 'utf8', (err) => {
             if (err){
                 reject(err)
             }
@@ -83,9 +82,15 @@ export function writeFile(filePath, content){
 
 
 // Excluir arquivos:
-export function deletFile(filePath) {
-    return new Prome ((resolve, reject) => {
-        fs.deletFile(filePath)
+export function deleteFile(filePath) {
+    return new Promise ((resolve, reject) => {
+        fs.unlink(filePath, (err) =>{
+            if (err){
+                reject(err)
+            }else{
+                resolve('Arquivo deletado com sucesso!')
+            }
+        })
     })
 }
 
